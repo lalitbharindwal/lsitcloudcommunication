@@ -142,8 +142,8 @@ function makeCall() {
     getUserMedia: navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)
 });
     var params = {
-        To: document.getElementById("phoneNumber").value, // The phone number you want to call
-        From: '+18145606374' // Your Twilio phone number (caller's number)
+        To: document.getElementById("phoneNumber").value // The phone number you want to call
+        //From: '+18145606374' // Your Twilio phone number (caller's number)
     };
     Twilio.Device.connect(params);
 }
