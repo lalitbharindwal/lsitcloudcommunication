@@ -8,8 +8,14 @@
         const accountSid = 'AC6d4a7718b9c2e2ac42bf76f1e09b2662';
         const authToken = '7b10b8c550c54be7cecb00dcdf37f06d';
 
-        // Initialize Twilio Client
-        Twilio.Device.setup(accountSid, authToken);
+        // Initialize Twilio Client with required arguments
+        Twilio.Device.setup(accountSid, authToken, {
+            debug: true,
+            AudioHelper: true,
+            PStream: true,
+            getUserMedia: true
+        });
+
 
         // Function to make a call
         function makeCall() {
