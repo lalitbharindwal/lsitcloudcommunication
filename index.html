@@ -7,7 +7,8 @@
 <body>
     <input type="number" id="phoneNumber" placeholder="Phone Number">
     <input type="text" id="token" placeholder="Enter JWT Token">
-    <button onclick="test2()">Test Token</button>
+    <button onclick="test()">Test1 Token</button>
+    <button onclick="test2()">Test2 Token</button>
     <button onclick="makeCall()">Make Call</button>
     <button onclick="hangUp()">Hang Up</button>
     <div id="status">Ready</div>
@@ -16,7 +17,13 @@
         
 function test(){
     var accessToken = document.getElementById("token").value; // Get access token from your server
-    Twilio.Device.setup(accessToken);
+    // Set up Twilio.Device with required arguments
+Twilio.Device.setup(accessToken, {
+    // Required arguments: Audiohelper, pstream, and getUserMedia
+    audioHelper: true,
+    pStream: true,
+    getUserMedia: navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)
+});
 
 
     // Initialize Twilio.Device
@@ -111,7 +118,12 @@ function test2(){
 const accessToken = document.getElementById("token").value;
 if (validateAccessToken(accessToken)) {
     // Access token is valid, proceed to setup Twilio.Device
-    Twilio.Device.setup(accessToken);
+    Twilio.Device.setup(accessToken, {
+    // Required arguments: Audiohelper, pstream, and getUserMedia
+    audioHelper: true,
+    pStream: true,
+    getUserMedia: navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)
+});
 } else {
     // Access token is invalid, handle the error accordingly
     console.error('Error: Invalid access token');
@@ -122,7 +134,13 @@ if (validateAccessToken(accessToken)) {
 
 
 function makeCall() {
-    
+    const accessToken = document.getElementById("token").value;
+    Twilio.Device.setup(accessToken, {
+    // Required arguments: Audiohelper, pstream, and getUserMedia
+    audioHelper: true,
+    pStream: true,
+    getUserMedia: navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)
+});
     var params = {
         To: document.getElementById("phoneNumber").value
     };
