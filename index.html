@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twilio Browser Calls</title>
+
+</head>
+<body>
+    <input type="number" id="phoneNumber" placeholder="Phone Number">
+    <input type="text" id="token" placeholder="Enter JWT Token">
+    <button onclick="test()">Test Token</button>
+    <button onclick="makeCall()">Make Call</button>
+    <button onclick="hangUp()">Hang Up</button>
+    <div id="status">Ready</div>
+    <script src="twilio.js"></script>
+    <script>
+        
+function test(){
+    var accessToken = document.getElementById("token").value; // Get access token from your server
+    Twilio.Device.ready(function(device) {
+    document.getElementById('status').innerText = 'Ready';
+    });
+
+    Twilio.Device.error(function(error) {
+        document.getElementById('status').innerText = 'Error: ' + error.message;
+    });
+
+    Twilio.Device.connect(function(conn) {
+        document.getElementById('status').innerText = 'Connected';
+    });
+
+    Twilio.Device.disconnect(function(conn) {
+        document.getElementById('status').innerText = 'Disconnected';
+    });
+    Twilio.Device.setup(accessToken);
+}
+
+
+function makeCall() {
+    
+    var params = {
+        To: document.getElementById("phoneNumber").value
+    };
+    Twilio.Device.connect(params);
+}
+
+function hangUp() {
+    Twilio.Device.disconnectAll();
+}
+    </script>
+        
+</body>
+</html>
