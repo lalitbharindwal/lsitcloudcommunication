@@ -50,6 +50,8 @@ device.on('disconnect', function(connection) {
     console.log('Disconnected from ' + connection.parameters.To);
 });
 
+Twilio.Device.setup(accessToken);
+
     Twilio.Device.ready(function(device) {
     document.getElementById('status').innerText = 'Ready';
     });
@@ -67,7 +69,7 @@ device.on('disconnect', function(connection) {
     });
 
 
-    Twilio.Device.setup(accessToken);
+    
 }
 
 
