@@ -135,14 +135,15 @@ if (validateAccessToken(accessToken)) {
 
 function makeCall() {
     const accessToken = document.getElementById("token").value;
+    console.log(accessToken)
     Twilio.Device.setup(accessToken, {
-    // Required arguments: Audiohelper, pstream, and getUserMedia
+    // Required arguments: Audioheper, pstream, and getUserMedia
     audioHelper: true,
     pStream: true,
     getUserMedia: navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices)
 });
     var params = {
-        To: document.getElementById("phoneNumber").value, // The phone number you want to call
+        To: "+" + document.getElementById("phoneNumber").value, // The phone number you want to call
         From: '+18145606374' // Your Twilio phone number (caller's number)
     };
 

@@ -2,19 +2,68 @@
 <html>
 <head>
     <title>Twilio WebRTC Example</title>
-    <script src="https://sdk.twilio.com/js/client/releases/1.12.0/twilio.js"></script>
+    <script src="twilio.js"></script>
+
     <script>
         // Twilio Account SID and Auth Token
-        const accountSid = 'AC6d4a7718b9c2e2ac42bf76f1e09b2662';
+        const accountSid = 'AC6d4a7718b9c2e2ac42bf76f1e09b266';
         const authToken = '7b10b8c550c54be7cecb00dcdf37f06d';
-
+// Initialize Twilio.Device
+const device = new Twilio.Device();
         // Initialize Twilio Client with required arguments
         Twilio.Device.setup(accountSid, authToken, {
-            debug: true, // Enable debug mode for logging
-            audioHelper: true, // Enable audio helper
-            pStream: true, // Enable pStream
-            getUserMedia: navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices) // Enable getUserMedia
+            // Required arguments: Audiohelper, pstream, and getUserMedia
         });
+
+ 
+
+// Event listeners using EventEmitter
+device.on('ready', function(device) {
+    console.log('Twilio.Device Ready');
+});
+
+device.on('error', function(error) {
+    console.log(error)
+    console.error('Twilio.Device Error:', error.message);
+});
+
+device.on('offline', function(device) {
+    console.log('Twilio.Device Offline');
+});
+
+device.on('incoming', function(connection) {
+    console.log('Incoming connection from ' + connection.parameters.From);
+    // Accept the incoming connection if desired
+    // connection.accept();
+});
+
+device.on('cancel', function(connection) {
+    console.log('Cancelled incoming connection from ' + connection.parameters.From);
+});
+
+device.on('connect', function(connection) {
+    console.log('Connected to ' + connection.parameters.To);
+});
+
+device.on('disconnect', function(connection) {
+    console.log('Disconnected from ' + connection.parameters.To);
+});
+
+    Twilio.Device.ready(function(device) {
+    document.getElementById('status').innerText = 'Ready';
+    });
+
+    Twilio.Device.error(function(error) {
+        console.log(error)
+    });
+
+    Twilio.Device.connect(function(conn) {
+        document.getElementById('status').innerText = 'Connected';
+    });
+
+    Twilio.Device.disconnect(function(conn) {
+        document.getElementById('status').innerText = 'Disconnected';
+    });
 
 
         // Function to make a call
