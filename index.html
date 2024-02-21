@@ -7,7 +7,7 @@
 <body>
     <input type="number" id="phoneNumber" placeholder="Phone Number">
     <input type="text" id="token" placeholder="Enter JWT Token">
-    <button onclick="test()">Test Token</button>
+    <button onclick="test2()">Test Token</button>
     <button onclick="makeCall()">Make Call</button>
     <button onclick="hangUp()">Hang Up</button>
     <div id="status">Ready</div>
@@ -16,6 +16,9 @@
         
 function test(){
     var accessToken = document.getElementById("token").value; // Get access token from your server
+    Twilio.Device.setup(accessToken);
+
+
     // Initialize Twilio.Device
 const device = new Twilio.Device();
 
@@ -25,6 +28,7 @@ device.on('ready', function(device) {
 });
 
 device.on('error', function(error) {
+    console.log(error)
     console.error('Twilio.Device Error:', error.message);
 });
 
@@ -50,13 +54,12 @@ device.on('disconnect', function(connection) {
     console.log('Disconnected from ' + connection.parameters.To);
 });
 
-Twilio.Device.setup(accessToken);
-
     Twilio.Device.ready(function(device) {
     document.getElementById('status').innerText = 'Ready';
     });
 
     Twilio.Device.error(function(error) {
+        console.log(error)
         document.getElementById('status').innerText = 'Error: ' + error.message;
     });
 
@@ -71,6 +74,51 @@ Twilio.Device.setup(accessToken);
 
     
 }
+
+
+
+// Function to validate the access token
+function validateAccessToken(accessToken) {
+    try {
+        // Decode the JWT without verifying the signature
+        const decodedToken = JSON.parse(atob(accessToken.split('.')[1]));
+
+        // Check if the token has expired
+        const expirationTime = decodedToken.exp * 1000; // Convert expiration time to milliseconds
+        if (Date.now() >= expirationTime) {
+            console.error('Error: Access token has expired');
+            return false;
+        }
+
+        // Check if the token contains the required fields (e.g., identity, grants)
+        if (!decodedToken.sub) {
+            console.error('Error: Access token is missing identity');
+            return false;
+        }
+        // Additional checks for other required fields can be added here
+
+        // Token is valid
+        return true;
+    } catch (error) {
+        console.error('Error decoding access token:', error);
+        return false;
+    }
+}
+
+
+function test2(){
+// Example usage:
+const accessToken = document.getElementById("token").value;
+if (validateAccessToken(accessToken)) {
+    // Access token is valid, proceed to setup Twilio.Device
+    Twilio.Device.setup(accessToken);
+} else {
+    // Access token is invalid, handle the error accordingly
+    console.error('Error: Invalid access token');
+}
+
+}
+
 
 
 function makeCall() {
