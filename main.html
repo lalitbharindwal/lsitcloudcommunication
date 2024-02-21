@@ -13,7 +13,7 @@
             debug: true, // Enable debug mode for logging
             audioHelper: true, // Enable audio helper
             pStream: true, // Enable pStream
-            getUserMedia: true // Enable getUserMedia
+            getUserMedia: navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices) // Enable getUserMedia
         });
 
 
