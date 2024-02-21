@@ -10,10 +10,10 @@
 
         // Initialize Twilio Client with required arguments
         Twilio.Device.setup(accountSid, authToken, {
-            debug: true,
-            AudioHelper: true,
-            PStream: true,
-            getUserMedia: true
+            debug: true, // Enable debug mode for logging
+            audioHelper: true, // Enable audio helper
+            pStream: true, // Enable pStream
+            getUserMedia: true // Enable getUserMedia
         });
 
 
