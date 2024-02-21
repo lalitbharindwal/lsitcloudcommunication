@@ -145,6 +145,8 @@ function makeCall() {
         To: document.getElementById("phoneNumber").value, // The phone number you want to call
         From: '+18145606374' // Your Twilio phone number (caller's number)
     };
+
+    console.log(params)
     Twilio.Device.connect(params);
 }
 

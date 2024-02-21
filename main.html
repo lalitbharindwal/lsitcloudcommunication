@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Twilio WebRTC Example</title>
+    <script src="https://sdk.twilio.com/js/client/releases/1.12.0/twilio.js"></script>
+    <script>
+        // Twilio Account SID and Auth Token
+        const accountSid = 'AC6d4a7718b9c2e2ac42bf76f1e09b2662';
+        const authToken = '7b10b8c550c54be7cecb00dcdf37f06d';
+
+        // Initialize Twilio Client
+        Twilio.Device.setup(accountSid, authToken);
+
+        // Function to make a call
+        function makeCall() {
+            const params = {
+                To: '+918796775539', // Replace with the phone number you want to call
+                From: '+18145606374' // Replace with your Twilio phone number
+            };
+
+            Twilio.Device.connect(params);
+        }
+    </script>
+</head>
+<body>
+    <h1>Twilio WebRTC Example</h1>
+    <button onclick="makeCall()">Call</button>
+</body>
+</html>
